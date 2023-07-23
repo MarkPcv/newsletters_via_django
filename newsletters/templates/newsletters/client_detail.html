@@ -1,0 +1,35 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Client {{ object.pk }}
+{% endblock %}
+{% block content %}
+    <div class="row align-items-center justify-content-center" style="height: 50vh">
+        <div class="col-4">
+            <div class="card">
+                <h3 class="card-header">
+                    Client Details
+                </h3>
+                <div class="card-body">
+                    <table class="table fs-5">
+                        <tr>
+                            <th scope="row">Full Name</th>
+                            <td>{{ object.fullname }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{ object.email }}</td>
+                        </tr>
+                        {% if object.comment %}
+                        <tr>
+                            <th scope="row">Comments</th>
+                            <td>{{ object.comment }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
