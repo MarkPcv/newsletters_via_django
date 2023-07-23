@@ -1,0 +1,20 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Client Deletion
+{% endblock %}
+{% block content %}
+    <div class="row align-items-center justify-content-center" style="height: 50vh">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-body fs-3">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Do you want to delete client - "{{ object.fullname }}"?</p>
+                        <button type="submit" class="btn btn-lg btn-success">Confirm</button>
+                        <a href="{% url 'newsletters:client_list' %}" class="btn btn-lg btn-warning">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
