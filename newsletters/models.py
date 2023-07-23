@@ -10,7 +10,7 @@ class Client(models.Model):
     """A class model for client of the service"""
     email = models.EmailField(max_length=250, verbose_name='email')
     fullname = models.CharField(max_length=250, verbose_name='fullname')
-    comment = models.CharField(max_length=250, verbose_name='comment', **NULLABLE)
+    comment = models.TextField(max_length=250, verbose_name='comment', **NULLABLE)
 
     def __str__(self):
         return f'{self.fullname} - {self.email}'
