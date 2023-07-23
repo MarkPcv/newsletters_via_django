@@ -1,0 +1,33 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Create client
+{% endblock %}
+{% block content %}
+    <div class="row align-items-center justify-content-center" style="height: 50vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">
+                    {% if object %}
+                        Changing user
+                    {% else %}
+                        Adding user
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-outline-success">
+                            {% if object %}
+                                Save
+                            {% else %}
+                                Create
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
