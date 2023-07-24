@@ -12,32 +12,36 @@
             </div>
             <div class="row mt-5 justify-content-center" style="width: 100%">
                 {% for object in object_list %}
-                    <div class="col-6 mx-3">
-                        <div class="card mb-4">
-                            <div class="card-header fs-4 fst-italic">
-                                {{ title }}
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text fs-5">{{ message }}</p>
-                                <p class="card-text fs-5">Status: <span
-                                        {% if object.status|lower == 'created' %}
-                                            class="badge text-uppercase text-bg-primary"
-                                        {% elif object.status|lower == 'started' %}
-                                            class="badge text-uppercase text-bg-secondary"
-                                        {% else %}
-                                            class="badge text-uppercase text-bg-success "
-                                        {% endif %}
-                                >{{ object.status|lower }}</span></p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="btn-group" role="group">
-                                    <a href="#" class="btn btn-outline-primary">View</a>
-                                    <a href="#" class="btn btn-outline-primary">Edit</a>
-                                    <a href="#" class="btn btn-outline-danger">Delete</a>
+                    <div class="col-5 mx-3">
+                        {% for content in content_list %}
+                            {% if content.pk == object.pk %}
+                                <div class="card mb-4">
+                                    <div class="card-header fs-4 fst-italic">
+                                        {{ content.title }}
+                                        {{ content_list}}
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text fs-5 text-truncate">{{ content.message }}</p>
+                                        <p class="card-text fs-5">Status: <span
+                                                {% if object.status|lower == 'created' %}
+                                                    class="badge text-uppercase text-bg-primary"
+                                                {% elif object.status|lower == 'started' %}
+                                                    class="badge text-uppercase text-bg-secondary"
+                                                {% else %}
+                                                    class="badge text-uppercase text-bg-success "
+                                                {% endif %}
+                                        >{{ object.status|lower }}</span></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="btn-group" role="group">
+                                            <a href="#" class="btn btn-outline-primary">View</a>
+                                            <a href="#" class="btn btn-outline-primary">Edit</a>
+                                            <a href="#" class="btn btn-outline-danger">Delete</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 {% endfor %}
             </div>

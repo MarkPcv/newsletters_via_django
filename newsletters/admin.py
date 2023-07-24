@@ -23,5 +23,5 @@ class TrialAdmin(admin.ModelAdmin):
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ('content', 'time', 'frequency', 'status')
+    list_display = ('pk', 'content', 'time', 'frequency', 'status')
     list_filter = ('status', 'frequency')

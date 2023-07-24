@@ -49,13 +49,10 @@ class ClientDeleteView(DeleteView):
 class NewsLetterListView(ListView):
     model = Newsletter
 
-    def get_context_data(self, *arg, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        # Get information of newsletter content
-        content_item = Content.objects.all()[0]
-        # print(content_item.message)
-        context_data['title'] = content_item.title
-        context_data['message'] = content_item.message
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        # Get information of newsletter content
+        context_data['content_list'] = Content.objects.all()
         return context_data
 
