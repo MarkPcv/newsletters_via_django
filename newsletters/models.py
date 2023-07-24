@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
 
 # Model characteristics
 NULLABLE = {
@@ -38,7 +41,7 @@ class Content(models.Model):
 
 class Newsletter(models.Model):
     """A class model for newsletter settings"""
-    time = models.TimeField(auto_now_add=True, verbose_name='time')
+    time = models.TimeField(default=timezone.now, verbose_name='time')
     frequency = models.CharField(max_length=50, verbose_name='frequency')
     status = models.CharField(max_length=50, verbose_name='status')
     # Foreign key
@@ -49,6 +52,7 @@ class Newsletter(models.Model):
 
     class Meta:
         verbose_name = 'settings'
+        verbose_name_plural = 'settings'
         ordering = ['time']
 
 
