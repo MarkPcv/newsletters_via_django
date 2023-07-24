@@ -24,28 +24,13 @@ class Client(models.Model):
         ordering = ['email']
 
 
-class Content(models.Model):
-    """A class model for newsletter content"""
-    title = models.CharField(max_length=250, verbose_name='title')
-    message = models.TextField(verbose_name='message')
-    # Foreign keys
-    client = models.ManyToManyField(Client, verbose_name='client')
-
-    def __str__(self):
-        return f'{self.title}: {self.message}'
-
-    class Meta:
-        verbose_name = 'content'
-        verbose_name_plural = 'contents'
-
-
 class Newsletter(models.Model):
     """A class model for newsletter settings"""
     time = models.TimeField(default=timezone.now, verbose_name='time')
     frequency = models.CharField(max_length=50, verbose_name='frequency')
     status = models.CharField(max_length=50, verbose_name='status')
     # Foreign key
-    content = models.OneToOneField(Content, on_delete=models.CASCADE, verbose_name='content')
+    # content = models.OneToOneField(Content, on_delete=models.CASCADE, verbose_name='content')
 
     def __str__(self):
         return f'{self.time} at {self.frequency} - {self.status}'
@@ -54,6 +39,22 @@ class Newsletter(models.Model):
         verbose_name = 'settings'
         verbose_name_plural = 'settings'
         ordering = ['time']
+
+
+class Content(models.Model):
+    """A class model for newsletter content"""
+    title = models.CharField(max_length=250, verbose_name='title')
+    message = models.TextField(verbose_name='message')
+    # Foreign keys
+    client = models.ManyToManyField(Client, verbose_name='client')
+    settings = models.ForeignKey(Newsletter, on_delete=models.CASCADE, verbose_name='settings')
+
+    def __str__(self):
+        return f'{self.title}: {self.message}'
+
+    class Meta:
+        verbose_name = 'content'
+        verbose_name_plural = 'contents'
 
 
 class Trial(models.Model):
