@@ -19,3 +19,9 @@ class TrialAdmin(admin.ModelAdmin):
     list_display = ('date', 'status',)
     ordering = ('date',)
     list_filter = ('content',)
+
+
+@admin.register(Newsletter)
+class NewsletterAdmin(admin.ModelAdmin):
+    list_display = ('content', 'time', 'frequency', 'status')
+    list_filter = ('status', 'frequency')
