@@ -10,7 +10,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'message',)
+    list_display = ('pk', 'settings', 'title', 'message',)
     search_fields = ('title', 'message',)
 
 
@@ -23,5 +23,5 @@ class TrialAdmin(admin.ModelAdmin):
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'content', 'time', 'frequency', 'status')
+    list_display = ('pk', 'time', 'frequency', 'status')
     list_filter = ('status', 'frequency')

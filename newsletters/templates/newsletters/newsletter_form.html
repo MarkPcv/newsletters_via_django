@@ -1,0 +1,41 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Create newsletter
+{% endblock %}
+{% block content %}
+    <form method="post" class="row align-items-center justify-content-center" style="height: 50vh">
+        <div class="col-4">
+            <div class="card">
+                <h3 class="card-header">
+                    {% if object %}
+                        Updating newsletter
+                    {% else %}
+                        Create newsletter
+                    {% endif %}
+                </h3>
+                <div class="card-body fs-5">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                        {{ form.as_p }}
+                    {% endfor %}
+
+                </div>
+                <div class="card-footer fs-5">
+                    <h3>
+                        Settings
+                    </h3>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-outline-success">
+                        {% if object %}
+                            Save
+                        {% else %}
+                            Create
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
