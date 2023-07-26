@@ -69,6 +69,6 @@ class Trial(models.Model):
         return f'{self.date}: {self.status}'
 
     class Meta:
-        verbose_name = 'trials'
+        verbose_name = 'trial'
         verbose_name_plural = 'trials'
         ordering = ['date']

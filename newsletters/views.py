@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from newsletters.forms import ClientForm, NewsletterForm, ContentForm
-from newsletters.models import Client, Newsletter, Content
+from newsletters.models import Client, Newsletter, Content, Trial
 
 
 def index(request):
@@ -47,7 +47,7 @@ class ClientDeleteView(DeleteView):
     success_url = reverse_lazy('newsletters:client_list')
 
 
-class NewsLetterListView(ListView):
+class NewsletterListView(ListView):
     model = Newsletter
 
     def get_context_data(self, *args, **kwargs):
@@ -57,7 +57,7 @@ class NewsLetterListView(ListView):
         return context_data
 
 
-class NewsLetterCreateView(CreateView):
+class NewsletterCreateView(CreateView):
     model = Newsletter
     form_class = NewsletterForm
     success_url = reverse_lazy('newsletters:newsletter_list')
@@ -86,5 +86,23 @@ class NewsLetterCreateView(CreateView):
         return super().form_valid(form)
 
 
+class NewsletterDetailView(DetailView):
+    model = Newsletter
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        # Retrieve content for newsletter
+        content_item = Content.objects.get(settings=self.object)
+        context_data['content'] = content_item
+        # Retrieve last trial for newsletter
+        try:
+            # trial = Trial.objects.get(pk=self.kwargs.get('pk'))
+            trial = Trial.objects.all()
+            print(trial.last())
+            if trial:
+                context_data['trial'] = trial.last()
+        except Trial.DoesNotExist:
+            pass
+        return context_data
 
 
