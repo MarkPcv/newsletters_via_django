@@ -137,3 +137,16 @@ class NewsletterUpdateView(UpdateView):
             formset.save()
         return super().form_valid(form)
 
+
+class NewsletterDeleteView(DeleteView):
+    model = Newsletter
+    success_url = reverse_lazy('newsletters:newsletter_list')
+
+    #Get title for newsletter
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        # Retrieve content for newsletter
+        content_item = Content.objects.get(settings=self.object)
+        print(content_item.title)
+        context_data['title'] = content_item.title
+        return context_data
