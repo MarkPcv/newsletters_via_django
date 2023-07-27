@@ -3,7 +3,7 @@ from django.urls import path
 from newsletters.apps import NewslettersConfig
 from newsletters.views import ClientListView, ClientCreateView, \
    ClientDetailView, ClientUpdateView, ClientDeleteView, NewsletterListView, \
-   NewsletterCreateView, NewsletterDetailView
+   NewsletterCreateView, NewsletterDetailView, NewsletterUpdateView
 
 app_name = NewslettersConfig.name
 
@@ -16,4 +16,5 @@ urlpatterns = [
    path('newsletter/', NewsletterListView.as_view(), name='newsletter_list'),
    path('newsletter/create/', NewsletterCreateView.as_view(), name='newsletter_create'),
    path('newsletter/<int:pk>/', NewsletterDetailView.as_view(), name='newsletter_view'),
+   path('newsletter/<int:pk>/update/', NewsletterUpdateView.as_view(), name='newsletter_update'),
 ]
