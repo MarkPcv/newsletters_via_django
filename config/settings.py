@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'newsletters',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # google app password
 EMAIL_PORT = os.getenv('EMAIL_PORT')                    # google port 587
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', False)=='True'
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False)=='False'
+
+CRONJOBS = [
+    ('*/1 * * * *', 'newsletters.services.my_scheduled_job')
+]
