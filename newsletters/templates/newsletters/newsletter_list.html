@@ -5,14 +5,14 @@
 {% block content %}
     <div class="px-4 py-5 text-center">
         <h1 class="display-5 fw-bold text-body-emphasis">Newsletters</h1>
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-12 mx-auto">
             <p class="lead mb-4">These are newsletters of the service</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <a href="{% url 'newsletters:newsletter_create' %}" type="button" class="btn btn-primary btn-lg px-4 gap-3">Add newsletter</a>
             </div>
             <div class="row mt-5 justify-content-center" style="width: 100%">
                 {% for object in object_list %}
-                    <div class="col-5 mx-3">
+                    <div class="col-3 mx-3">
                         {% for content in content_list %}
                             {% if content.settings.pk == object.pk %}
                                 <div class="card mb-4">

@@ -150,3 +150,7 @@ class NewsletterDeleteView(DeleteView):
         print(content_item.title)
         context_data['title'] = content_item.title
         return context_data
+
+
+class TrialListView(ListView):
+    model = Trial

@@ -1,0 +1,41 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Trials
+{% endblock %}
+{% block content %}
+    <div class="px-4 py-5 text-center">
+        <h1 class="display-5 fw-bold text-body-emphasis">Trials</h1>
+        <div class="col-lg-10 mx-auto">
+            <p class="lead mb-4">All trials are displayed on this page</p>
+            <table class="table table-striped table-sm" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for object in object_list %}
+                            <td>{{ object.pk }}</td>
+                            <td>{{ object.date|date:"H:i" }} on {{ object.date|date:"d M Y" }}</td>
+                            <td>{{ object.status }}</td>
+                            <td class="col-7">
+                                <p>
+                                    <span class="fw-bold">{{ object.content.title }}:</span>
+                                    <span class="fst-italic">{{ object.content.message|truncatechars:"85" }}</span>
+                                </p>
+                            </td>
+                            <td class="col-2">{{ object.response }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+</body>
