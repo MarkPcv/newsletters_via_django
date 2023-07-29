@@ -23,17 +23,23 @@
 
                         <td>{{ object.pk }}</td>
                         <td>{{ object.date|date:"H:i" }} on {{ object.date|date:"d M Y" }}</td>
-                        <td>{{ object.status }}</td>
+                        <td>
+                            {% if object.status == 'successful' %}
+                                <span class="text-success">{{ object.status }}</span>
+                            {% else %}
+                                <span class="text-danger">{{ object.status }}</span>
+                            {% endif %}
+                        </td>
                         <td class="col-3">{{ object.client.email }}</td>
                         <td class="col-4 overflow-y-scroll">
                             {% if object.response %}
-                            {#                            {{ object.response }}#}
-                            <button type="button" class="btn btn-sm btn-secondary"
-                                    data-bs-toggle="popover"
-                                    data-bs-placement="left"
-                                    data-bs-content="{{ object.response}}">
-                                Click to view response
-                            </button>
+                                {#                            {{ object.response }}#}
+                                <button type="button" class="btn btn-sm btn-secondary"
+                                        data-bs-toggle="popover"
+                                        data-bs-placement="left"
+                                        data-bs-content="{{ object.response }}">
+                                    Click to view response
+                                </button>
                             {% endif %}
                         </td>
                     </tr>
