@@ -25,7 +25,17 @@
                         <td>{{ object.date|date:"H:i" }} on {{ object.date|date:"d M Y" }}</td>
                         <td>{{ object.status }}</td>
                         <td class="col-3">{{ object.client.email }}</td>
-                        <td class="col-4">{{ object.response }}</td>
+                        <td class="col-4 overflow-y-scroll">
+                            {% if object.response %}
+                            {#                            {{ object.response }}#}
+                            <button type="button" class="btn btn-sm btn-secondary"
+                                    data-bs-toggle="popover"
+                                    data-bs-placement="left"
+                                    data-bs-content="{{ object.response}}">
+                                Click to view response
+                            </button>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -33,5 +43,12 @@
         </div>
     </div>
 
+    {# Script for simple popover for SMTP response#}
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 {% endblock %}
-</body>
+
