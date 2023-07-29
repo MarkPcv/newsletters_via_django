@@ -64,6 +64,7 @@ class Trial(models.Model):
     response = models.CharField(max_length=250, verbose_name='response', **NULLABLE)
     # Foreign key
     content = models.ForeignKey(Content, on_delete=models.CASCADE, verbose_name='content')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='client')
 
     def __str__(self):
         return f'{self.date}: {self.status}'
