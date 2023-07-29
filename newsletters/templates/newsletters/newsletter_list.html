@@ -35,6 +35,7 @@
                                         <div class="btn-group" role="group">
                                             <a href="{% url 'newsletters:newsletter_view' object.pk %}" class="btn btn-outline-primary">View</a>
                                             <a href="{% url 'newsletters:newsletter_update' object.pk %}" class="btn btn-outline-primary">Edit</a>
+                                            <a href="{% url 'newsletters:trial_list' content.pk %}" class="btn btn-outline-primary">Trials</a>
                                             <a href="{% url 'newsletters:newsletter_delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
                                         </div>
                                     </div>
