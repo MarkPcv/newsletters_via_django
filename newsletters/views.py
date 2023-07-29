@@ -154,3 +154,11 @@ class NewsletterDeleteView(DeleteView):
 
 class TrialListView(ListView):
     model = Trial
+
+    # Get all trials for specific newsletter
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(
+            content_id=self.kwargs.get('pk'),
+        )
+        return queryset
+
