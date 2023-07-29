@@ -142,14 +142,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')                    # using smtp.gmail.com
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')          # google account
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # google app password
-EMAIL_PORT = os.getenv('EMAIL_PORT')                    # google port 587
+EMAIL_PORT = 587                                        # google port 587
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', False)=='True'
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False)=='False'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False)=='True'
 
 CRONJOBS = [
-    ('*/1 * * * *', 'newsletters.services.my_scheduled_job')
+    ('0 0 15 * *', 'newsletters.services.check_job')
 ]
