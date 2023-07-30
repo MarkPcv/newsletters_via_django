@@ -1,0 +1,5 @@
+{% autoescape off %}
+Hi there,
+Please click on the link below to confirm your registration,
+http://{{ domain }}{% url 'users:activate_user' user_pk=pk %}
+{% endautoescape %}

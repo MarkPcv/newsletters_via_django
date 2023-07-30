@@ -1,6 +1,11 @@
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
@@ -14,6 +19,13 @@ class LoginView(BaseLoginView):
 
 class LogoutView(BaseLogoutView):
     pass
+
+
+def activate_user(request, user_pk):
+    user = User.objects.get(pk=user_pk)
+    user.is_active = True
+    user.save()
+    return HttpResponse('Thank you for your email confirmation.')
 
 
 class RegisterView(CreateView):
