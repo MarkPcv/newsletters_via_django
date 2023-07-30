@@ -1,0 +1,22 @@
+{% extends 'newsletters/base.html' %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+    <div class="row align-items-center justify-content-center" style="height: 50vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+{#                        <a href="{% url 'users:reset' %}" class="link-dark">Восстановить пароль?</a>#}
+{#                        <br>#}
+                        <button type="submit" class="btn btn-outline-primary mt-3">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
