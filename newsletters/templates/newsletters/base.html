@@ -28,7 +28,7 @@
                 <a href="#" type="button" class="btn btn-outline-primary me-2">Profile</a>
                 <a href="{% url 'users:logout' %}" type="button" class="btn btn-primary">Logout</a>
             {% else %}
-                <a href="#" type="button" class="btn btn-outline-primary me-2">Sign-up</a>
+                <a href="{% url 'users:register' %}" type="button" class="btn btn-outline-primary me-2">Sign-up</a>
                 <a href="{% url 'users:login' %}" type="button" class="btn btn-primary">Login</a>
 
             {% endif %}
