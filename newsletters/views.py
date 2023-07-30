@@ -15,7 +15,7 @@ from newsletters.forms import ClientForm, NewsletterForm, ContentForm
 from newsletters.models import Client, Newsletter, Content, Trial
 from newsletters.services import get_newsletter_cache
 
-@cache_page(60)
+# @cache_page(60)
 def index(request):
     """
     FBV for Main page realisation

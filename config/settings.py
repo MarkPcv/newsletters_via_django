@@ -151,7 +151,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_REDIRECT_URL = '/newsletter/'
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = '/users/'
+# LOGIN_URL = '/users/'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')                    # using smtp.gmail.com
