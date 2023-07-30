@@ -1,14 +1,12 @@
 import datetime
 import os
-
-import pytz  # module to convert timzone
-from dateutil.relativedelta import relativedelta
-import smtplib
+import pytz  # module to convert timezone
+from dateutil.relativedelta import relativedelta # package from monthly dates
+import smtplib  # library to handle SMTP exceptions
 
 from django.conf import settings
 from django.core.mail import send_mail
 
-import config.settings
 from newsletters.models import Newsletter, Client, Content, Trial
 
 FREQUENCY = {
@@ -63,8 +61,6 @@ def is_scheduled(newsletter: Newsletter) -> bool:
     date_time = datetime.datetime.combine(last_trial.date.date(), newsletter.time)
     # Find next schedule date
     next_datetime =  date_time + increment
-    ## TODO: remove below line
-    # log(last_trial.date.strftime('%d/%m/%Y @ %H:%M') + ' : ' + content.title)
     # Validate the emailing procedure
     return next_datetime <= datetime.datetime.now()
 
@@ -89,8 +85,6 @@ def send_newsletter(newsletter: Newsletter, content: Content):
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[client.email],
             )
-            #TODO remove
-            log(f'Sending email for newsletter @ {newsletter.time} to {client.email}')
             trial.status = 'successful'
 
         # Handle SMTP service exceptions
@@ -103,11 +97,8 @@ def send_newsletter(newsletter: Newsletter, content: Content):
         finally:
             # Save a record for trial
             trial.save()
-
-            ## TODO: line for logging
+            # Log a trial
             log_trial(trial)
-
-
 
 
 def check_trials(content: Content) -> bool:
