@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, \
     PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -8,14 +9,18 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from newsletters.forms import ClientForm, NewsletterForm, ContentForm
 from newsletters.models import Client, Newsletter, Content, Trial
 
-
+## TODO: Implement main page
 def index(request):
     # Testing
     return render(request, 'newsletters/base.html')
 
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
+
+    # Display only user's clients
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
 
 
 class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -35,14 +40,15 @@ class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
 
-class ClientDetailView(DetailView):
+class ClientDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Client
+    permission_required = 'newsletters.view_client'
 
 
 class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
-    permission_required = 'newsletters.update_client'
+    permission_required = 'newsletters.change_client'
 
     def get_success_url(self):
         return reverse('newsletters:client_update', args=[self.object.pk])
@@ -52,13 +58,18 @@ class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ClientDeleteView(DeleteView):
+class ClientDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('newsletters:client_list')
+    permission_required = 'newsletters.delete_client'
 
 
-class NewsletterListView(ListView):
+class NewsletterListView(LoginRequiredMixin, ListView):
     model = Newsletter
+
+    # Display only user's newsletters
+    def get_queryset(self):
+        return super().get_queryset().filter(owner=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
@@ -67,10 +78,11 @@ class NewsletterListView(ListView):
         return context_data
 
 
-class NewsletterCreateView(CreateView):
+class NewsletterCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Newsletter
     form_class = NewsletterForm
     success_url = reverse_lazy('newsletters:newsletter_list')
+    permission_required = 'newsletters.add_newsletter'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -97,8 +109,9 @@ class NewsletterCreateView(CreateView):
         return super().form_valid(form)
 
 
-class NewsletterDetailView(DetailView):
+class NewsletterDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Newsletter
+    permission_required = 'newsletters.view_newsletter'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -106,20 +119,26 @@ class NewsletterDetailView(DetailView):
         content_item = Content.objects.get(settings=self.object)
         context_data['content'] = content_item
         # Retrieve last trial for newsletter
-        try:
-            # trial = Trial.objects.get(pk=self.kwargs.get('pk'))
-            trial = Trial.objects.all()
-            print(trial.last())
-            if trial:
-                context_data['trial'] = trial.last()
-        except Trial.DoesNotExist:
-            pass
+        # try:
+        #     trial = Trial.objects.all()
+        #     if trial:
+        #         context_data['trial'] = trial.last()
+        # except Trial.DoesNotExist:
+        #     pass
         return context_data
 
 
-class NewsletterUpdateView(UpdateView):
+class NewsletterUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Newsletter
     form_class = NewsletterForm
+    permission_required = 'newsletters.change_newsletter'
+
+    # Prevent editing to newsletter of another user
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner != self.request.user:
+            raise Http404
+        return self.object
 
     def get_success_url(self):
         return reverse('newsletters:newsletter_update', args=[self.object.pk])
@@ -149,9 +168,10 @@ class NewsletterUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class NewsletterDeleteView(DeleteView):
+class NewsletterDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Newsletter
     success_url = reverse_lazy('newsletters:newsletter_list')
+    permission_required = 'newsletters.delete_newsletter'
 
     #Get title for newsletter
     def get_context_data(self, **kwargs):
@@ -163,7 +183,7 @@ class NewsletterDeleteView(DeleteView):
         return context_data
 
 
-class TrialListView(ListView):
+class TrialListView(LoginRequiredMixin, ListView):
     model = Trial
 
     # Get all trials for specific newsletter

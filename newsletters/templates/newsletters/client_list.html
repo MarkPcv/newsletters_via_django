@@ -5,14 +5,14 @@
 {% block content %}
     <div class="px-4 py-5 text-center">
         <h1 class="display-5 fw-bold text-body-emphasis">Our clients</h1>
-        <div class="col-lg-6 mx-auto">
+        <div class="col-lg-10 mx-auto">
             <p class="lead mb-4">These are clients of our newsletter mailing service</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <a href="{% url 'newsletters:client_create' %}" type="button" class="btn btn-primary btn-lg px-4 gap-3">Add client</a>
             </div>
             <div class="row mt-5 justify-content-center">
                 {% for object in object_list %}
-                    <div class="col-md-4 mx-3">
+                    <div class="col-md-3 mx-3">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="card-text fs-5">{{ object.fullname }}</p>

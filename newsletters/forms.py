@@ -32,13 +32,13 @@ class StyleFormMixin:
 class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('owner',)
 
 
 class NewsletterForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Newsletter
-        fields = '__all__'
+        exclude = ('owner',)
 
 
 class ContentForm(StyleFormMixin, forms.ModelForm):
