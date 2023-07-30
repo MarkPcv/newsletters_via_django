@@ -1,20 +1,21 @@
 {% extends 'newsletters/base.html' %}
 {% block title %}
-    Registration
+    Profile
 {% endblock %}
 {% block content %}
     <div class="row align-items-center justify-content-center" style="height: 50vh">
-        <div class="col-4">
+        <div class="col-3">
             <div class="card">
-                <div class="card-header fs-4">User Registration</div>
+                <div class="card-header fs-4">My profile</div>
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-success">Register</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                     </form>
                 </div>
             </div>
         </div>
+
     </div>
 {% endblock %}
