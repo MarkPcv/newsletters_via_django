@@ -22,6 +22,9 @@ class LogoutView(BaseLogoutView):
 
 
 def activate_user(request, user_pk):
+    """
+    Activates user by link provided with verification email
+    """
     user = User.objects.get(pk=user_pk)
     user.is_active = True
     user.save()
