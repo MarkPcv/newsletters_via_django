@@ -10,7 +10,7 @@ from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from newsletters.models import Newsletter
 from users.forms import UserRegisterForm, UserProfileForm
@@ -84,3 +84,21 @@ def deactivate_newsletter(request, pk):
     newsletter.status = 'finished'
     newsletter.save()
     return redirect(reverse('newsletters:newsletter_list'))
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+
+    # Display only user's clients
+    def get_queryset(self):
+        return super().get_queryset().exclude(pk=self.request.user.pk)
+
+@login_required
+def deactivate_user(request, pk):
+    user = User.objects.get(pk=pk)
+    if user.is_active:
+        user.is_active = False
+    else:
+        user.is_active = True
+    user.save()
+    return redirect(reverse('users:user_list'))

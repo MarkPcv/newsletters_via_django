@@ -13,7 +13,7 @@ from newsletters.models import Client, Newsletter, Content, Trial
 ## TODO: Implement main page
 def index(request):
     # Testing
-    return render(request, 'newsletters/base.html')
+    return render(request, 'newsletters/index.html')
 
 
 class ClientListView(LoginRequiredMixin, ListView):

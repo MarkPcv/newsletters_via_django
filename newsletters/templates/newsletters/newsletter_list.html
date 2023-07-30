@@ -36,16 +36,16 @@
                                     <div class="card-footer">
                                         <div class="btn-group" role="group">
                                             <a href="{% url 'newsletters:newsletter_view' object.pk %}" class="btn btn-outline-primary">View</a>
-                                            {% if perm.newsletters.change_newsletter %}
+                                            {% if perms.newsletters.change_newsletter %}
                                                 <a href="{% url 'newsletters:newsletter_update' object.pk %}" class="btn btn-outline-primary">Edit</a>
                                             {% endif %}
                                             <a href="{% url 'newsletters:trial_list' content.pk %}" class="btn btn-outline-primary">Trials</a>
-                                            {% if perm.newsletters.delete_newsletter %}
+                                            {% if perms.newsletters.delete_newsletter %}
                                                 <a href="{% url 'newsletters:newsletter_delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
                                             {% endif %}
                                         </div>
                                         {% if user.is_staff and object.status != 'finished' %}
-                                            <a href="{% url 'users:deactivate_newsletter' object.pk%}" class="btn btn-warning">Deactivate</a>
+                                            <a href="{% url 'users:deactivate_newsletter' object.pk%}" class="btn btn-warning">Turn off</a>
                                         {% endif %}
                                     </div>
                                 </div>

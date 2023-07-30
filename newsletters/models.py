@@ -45,8 +45,8 @@ class Newsletter(models.Model):
         return f'{self.time} at {self.frequency} - {self.status}'
 
     class Meta:
-        verbose_name = 'settings'
-        verbose_name_plural = 'settings'
+        verbose_name = 'newsletter'
+        verbose_name_plural = 'newsletters'
         ordering = ['time']
 
 

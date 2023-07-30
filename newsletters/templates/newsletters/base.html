@@ -19,12 +19,15 @@
         </div>
 
         <ul class="nav col-12 col-md-auto mb-2 fs-4 justify-content-center mb-md-0">
-            {% if user.is_staff %}
-                <li><a href="#" class="nav-link px-2 ">Users</a></li>
-            {% else %}
-                <li><a href="{% url 'newsletters:client_list' %}" class="nav-link px-2 ">Clients</a></li>
+            <li><a href="{% url 'newsletters:index' %}" class="nav-link px-2 ">Main</a></li>
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <li><a href="{% url 'users:user_list' %}" class="nav-link px-2 ">Users</a></li>
+                {% else %}
+                    <li><a href="{% url 'newsletters:client_list' %}" class="nav-link px-2 ">Clients</a></li>
+                {% endif %}
+                <li><a href="{% url 'newsletters:newsletter_list' %}" class="nav-link px-2">Newsletters</a></li>
             {% endif %}
-            <li><a href="{% url 'newsletters:newsletter_list' %}" class="nav-link px-2">Newsletters</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
