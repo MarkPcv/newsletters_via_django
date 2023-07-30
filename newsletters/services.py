@@ -70,7 +70,7 @@ def send_newsletter(newsletter: Newsletter, content: Content):
     Sends a newsletter to every client in the database
     """
     # Get all clients
-    clients = Client.objects.all()
+    clients = Client.objects.all().filter(owner=newsletter.owner)
     # Send email to each client
     for client in clients:
 
@@ -101,6 +101,7 @@ def send_newsletter(newsletter: Newsletter, content: Content):
             log_trial(trial)
 
 
+## TODO: perhaps not needed
 def check_trials(content: Content) -> bool:
     """
     Checks if newsletter is successfully delivered to every client
@@ -117,6 +118,11 @@ def check_trials(content: Content) -> bool:
     return True
 
 
+def is_active(newsletter:Newsletter) -> bool:
+    # Check newsletter status
+    return newsletter.status != 'finished'
+
+
 def check_job():
     """
     This is a main algorithm of scheduler for mailing service
@@ -126,7 +132,7 @@ def check_job():
 
         # Send email when current time surpass scheduled time
         if (newsletter.time <= datetime.datetime.now().time()
-                and is_scheduled(newsletter)):
+                and is_scheduled(newsletter)) and is_active(newsletter):
             # Change status of newsletter
             newsletter.status = 'started'
             newsletter.save()
@@ -134,8 +140,3 @@ def check_job():
             content = get_content(newsletter)
             # Send email to each client
             send_newsletter(newsletter, content)
-            # Check if newsletter has been delivered to everyone
-            if check_trials(content):
-                # Change newsletter status and save it
-                newsletter.status = 'finished'
-                newsletter.save()

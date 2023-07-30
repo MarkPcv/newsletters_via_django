@@ -18,8 +18,12 @@
             <span class="fs-3">Django Basics</span>
         </div>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'newsletters:client_list' %}" class="nav-link px-2 ">Main</a></li>
+        <ul class="nav col-12 col-md-auto mb-2 fs-4 justify-content-center mb-md-0">
+            {% if user.is_staff %}
+                <li><a href="#" class="nav-link px-2 ">Users</a></li>
+            {% else %}
+                <li><a href="{% url 'newsletters:client_list' %}" class="nav-link px-2 ">Clients</a></li>
+            {% endif %}
             <li><a href="{% url 'newsletters:newsletter_list' %}" class="nav-link px-2">Newsletters</a></li>
         </ul>
 

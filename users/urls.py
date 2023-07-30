@@ -2,7 +2,7 @@ from django.urls import path
 
 from users.apps import UsersConfig
 from users.views import LoginView, LogoutView, RegisterView, ProfileView, \
-    activate_user
+    activate_user, deactivate_newsletter
 
 app_name = UsersConfig.name
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('activate/<user_pk>', activate_user, name='activate_user'),
+    path('deactivate/newsletter<int:pk>', deactivate_newsletter, name='deactivate_newsletter'),
 ]
