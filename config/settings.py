@@ -145,6 +145,11 @@ LOGS_ROOT = BASE_DIR / 'logs'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')                    # using smtp.gmail.com
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')          # google account
