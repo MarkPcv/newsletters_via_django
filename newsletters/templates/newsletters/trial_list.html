@@ -22,7 +22,8 @@
                     <tr>
 
                         <td>{{ object.pk }}</td>
-                        <td>{{ object.date|date:"H:i" }} on {{ object.date|date:"d M Y" }}</td>
+                        <td>{{ object.date|date:"H:i" }}
+                            on {{ object.date|date:"d M Y" }}</td>
                         <td>
                             {% if object.status == 'successful' %}
                                 <span class="text-success">{{ object.status }}</span>
@@ -34,7 +35,8 @@
                         <td class="col-4 overflow-y-scroll">
                             {% if object.response %}
                                 {#                            {{ object.response }}#}
-                                <button type="button" class="btn btn-sm btn-secondary"
+                                <button type="button"
+                                        class="btn btn-sm btn-secondary"
                                         data-bs-toggle="popover"
                                         data-bs-placement="left"
                                         data-bs-content="{{ object.response }}">
