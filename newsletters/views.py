@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, \
+    PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -16,23 +18,31 @@ class ClientListView(ListView):
     model = Client
 
 
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy('newsletters:client_list')
+    permission_required = 'newsletters.add_client'
 
     # Basic validation using models fields
     def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+
         return super().form_valid(form)
+
+
 
 
 class ClientDetailView(DetailView):
     model = Client
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
+    permission_required = 'newsletters.update_client'
 
     def get_success_url(self):
         return reverse('newsletters:client_update', args=[self.object.pk])
@@ -78,6 +88,7 @@ class NewsletterCreateView(CreateView):
         formset = context_data['formset']
         self.object = form.save()
         self.object.status = 'created'
+        self.object.owner = self.request.user
         self.object.save()
 
         if formset.is_valid():
