@@ -17,13 +17,6 @@ FREQUENCY = {
 }
 
 
-## TODO: Remove after finish
-def log(message):
-    message = str(datetime.datetime.now()) + ':   ' + message + '\n'
-    with open('/Users/markpcv/Desktop/test/test.txt', 'a') as f:
-        f.write(message)
-
-
 def log_trial(trial: Trial):
     """
     Record each trial of mailing servie
@@ -100,23 +93,6 @@ def send_newsletter(newsletter: Newsletter, content: Content):
             trial.save()
             # Log a trial
             log_trial(trial)
-
-
-## TODO: perhaps not needed
-def check_trials(content: Content) -> bool:
-    """
-    Checks if newsletter is successfully delivered to every client
-    """
-    # Get all clients
-    clients = Client.objects.all()
-    for client in clients:
-        # Get last trial for a client
-        trial = Trial.objects.all().filter(client=client,
-                                           content=content).last()
-        if trial.status == 'unsuccessful':
-            return False
-
-    return True
 
 
 def is_active(newsletter:Newsletter) -> bool:
