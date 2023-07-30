@@ -20,8 +20,7 @@ will be provided only after the email verification.
 - View and block users
 
 To stop newsletter user or manager has to change its status to _finished_.
-Mailing logs are generated and stored automatically in <code>
-./logs/logs.txt</code>
+Mailing logs are generated and stored automatically in <code>./logs/logs.txt</code>
 
 ### Scheduling
 
