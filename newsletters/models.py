@@ -68,7 +68,7 @@ class Content(models.Model):
 class Trial(models.Model):
     """A class model for newsletter trial"""
     date = models.DateTimeField(auto_now_add=True, verbose_name='date')
-    status = models.CharField(max_length=100, default='created',
+    status = models.CharField(max_length=100, **NULLABLE,
                               verbose_name='status')
     response = models.CharField(max_length=250, verbose_name='response',
                                 **NULLABLE)

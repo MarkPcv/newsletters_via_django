@@ -9,6 +9,7 @@
             <p class="lead mb-4">These are users of newsletter mailing service</p>
             <div class="row mt-5 justify-content-center">
                 {% for object in object_list %}
+                    {% if not object.is_superuser %}
                     <div class="col-md-4 mx-3">
                         <div class="card mb-4">
                             <h5 class="card-header">
@@ -44,6 +45,7 @@
                         </div>
 
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
