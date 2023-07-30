@@ -5,9 +5,48 @@
 {% block content %}
     <div class="px-4 py-5 text-center">
         <h1 class="display-5 fw-bold text-body-emphasis">Main</h1>
-        <div class="col-lg-10 mx-auto">
-            <p class="lead mb-4">A main page of mailing service</p>
+        <p class="lead mb-4">A main page of mailing service</p>
+        <div class="row justify-content-center">
+            {% for blog in blogs %}
+            <div class="col-3 mx-2 card">
+                <img src="/media/{{ blog.image }}" class="card-img-top mx-auto d-block" alt="No image" style="width: 10vw; height: 10vw">
+                <div class="card-body">
+                    <h5 class="card-title">{{ blog.title }}</h5>
+                    <p class="card-text">{{ blog.content }}</p>
+                </div>
+                <div class="card-footer">
+                    <p>Published on {{ blog.date_published|date:"d M Y" }}</p>
+                    <p class="text-muted">{{ blog.views_count }} views</p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
+        <div class="col-lg-3 mx-auto mt-5">
+
+            <table class="table table-striped text-start">
+                <thead>
+                <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Total newsletters</td>
+                    <td>{{ total_newsletters }}</td>
+                </tr>
+                <tr>
+                    <td><span class="fw-bold">Active</span> newsletters</td>
+                    <td>{{ active_newsletters }}</td>
+                </tr>
+                <tr>
+                    <td>Unique clients (via email)</td>
+                    <td>{{ total_clients }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 {% endblock %}

@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.mixins import LoginRequiredMixin, \
     PermissionRequiredMixin
 from django.contrib.auth.models import Group
@@ -7,13 +9,34 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from blog.models import Blog
 from newsletters.forms import ClientForm, NewsletterForm, ContentForm
 from newsletters.models import Client, Newsletter, Content, Trial
 
-## TODO: Implement main page
+
 def index(request):
-    # Testing
-    return render(request, 'newsletters/index.html')
+    """
+    FBV for Main page realisation
+    """
+    # Get total number of all newsletters
+    total_newsletters = Newsletter.objects.count()
+    # Get total number of active newsletters
+    active_newsletters = len(Newsletter.objects.all().exclude(status='finished'))
+    # Get total number of unique clients
+    total_clients = len(Client.objects.all().distinct('email'))
+    # Get random 3 blogs
+    blogs = Blog.objects.all()
+    while blogs.count() > 3:
+        blog_index = random.randint(0,blogs.count()-1)
+        blogs = blogs.exclude(pk=blogs[blog_index].pk)
+
+    context = {
+        "total_newsletters" : total_newsletters,
+        "active_newsletters" : active_newsletters,
+        "total_clients" : total_clients,
+        "blogs" : blogs,
+    }
+    return render(request, 'newsletters/index.html', context)
 
 
 class ClientListView(LoginRequiredMixin, ListView):
