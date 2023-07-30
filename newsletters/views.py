@@ -7,21 +7,25 @@ from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from blog.models import Blog
 from newsletters.forms import ClientForm, NewsletterForm, ContentForm
 from newsletters.models import Client, Newsletter, Content, Trial
+from newsletters.services import get_newsletter_cache
 
-
+@cache_page(60)
 def index(request):
     """
     FBV for Main page realisation
     """
+    # Get newsletters form cache
+    cached_newsletters = get_newsletter_cache()
     # Get total number of all newsletters
-    total_newsletters = Newsletter.objects.count()
+    total_newsletters = cached_newsletters.count()
     # Get total number of active newsletters
-    active_newsletters = len(Newsletter.objects.all().exclude(status='finished'))
+    active_newsletters = len(cached_newsletters.exclude(status='finished'))
     # Get total number of unique clients
     total_clients = len(Client.objects.all().distinct('email'))
     # Get random 3 blogs

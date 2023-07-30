@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta # package from monthly dates
 import smtplib  # library to handle SMTP exceptions
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.mail import send_mail
 
 from newsletters.models import Newsletter, Client, Content, Trial
@@ -140,3 +141,19 @@ def check_job():
             content = get_content(newsletter)
             # Send email to each client
             send_newsletter(newsletter, content)
+
+
+def get_newsletter_cache():
+    """
+    Function to get cache of newsletters
+    """
+    if settings.CACHE_ENABLED:
+        key = 'newsletter_list'
+        newsletter_list = cache.get(key)
+        if newsletter_list is None:
+            newsletter_list = Newsletter.objects.all()
+            cache.set(key, newsletter_list)
+    else:
+        newsletter_list = Newsletter.objects.all()
+
+    return newsletter_list
