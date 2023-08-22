@@ -1,6 +1,6 @@
-# Mailing Service using Django
+# Project «Mailing Service using Django»
 
-## Project Description
+## Description
 
 This project provides ability to create a basic mailing service for sending
 newsletters to the list of recipients. The service is developed via Django
